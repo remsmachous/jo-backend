@@ -1,0 +1,48 @@
+# --- Python / Django ---
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.build/
+
+# --- Environnement virtuel ---
+.venv/
+venv/
+env/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Logs / cache ---
+*.log
+logs/
+celerybeat-schedule
+.cache/
+.coverage
+htmlcov/
+
+# --- Django collectstatic ---
+staticfiles/
+static_root/
+static_collected/
+
+# --- Médias uploadés ---
+media/
+uploads/
+
+# --- Secrets / env ---
+.env
+.env.*
+!.env.example
+
+# --- Docker/Fly artefacts éventuels ---
+*.db
+*.sqlite3
+__snapshot__/

@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}JO Billetterie — Administration{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/custom.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <div id="site-name" style="display:flex;align-items:center;gap:.5rem;">
+    <img src="{% static 'admin/logo-jo.svg' %}" alt="" style="height:28px;width:auto;object-fit:contain;" onerror="this.style.display='none'">
+    <a href="{% url 'admin:index' %}">JO Billetterie — Administration</a>
+  </div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

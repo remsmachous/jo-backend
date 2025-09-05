@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyi
+*.egg-info/
+.build/
+
+# Virtual env
+.venv/
+venv/
+
+# Git / IDE
+.git/
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+
+# Environnements
+.env
+.env.*
+*.env
+
+# Static & media (seront gérés en volume / collectstatic)
+staticfiles/
+media/
+
+# Tests / cache
+pytest_cache/
+.coverage
+htmlcov/
+
+# Node (au cas où)
+node_modules/
+
+# Docker
+.dockerignore
