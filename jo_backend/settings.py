@@ -165,13 +165,24 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- CORS ---
-_default_cors = "http://localhost:5173,http://127.0.0.1:5173"
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8080",
-    "http://localhost:8080",
-]
+
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    "http://127.0.0.1:8080,http://localhost:8080"
+)
+
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "https://jobackend.fly.dev")
+
+CSRF_TRUSTED_ORIGINS = env_list(
+    "CSRF_TRUSTED_ORIGINS",
+    "https://jobackend.fly.dev"
+)
+
+derived_hosts = _hosts_from_urls(CORS_ALLOWED_ORIGINS)
+
+ALLOWED_HOSTS = list(set(
+    ["jobackend.fly.dev", ".fly.dev", "localhost", "127.0.0.1"] + derived_hosts
+))
 
 # --- DRF ---
 REST_FRAMEWORK = {
