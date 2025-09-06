@@ -27,6 +27,10 @@ class OfferSerializer(serializers.ModelSerializer):
             "sort_order",
             "created_at",
             "updated_at",
+            "category", 
+            "titre", 
+            "btnLabel", 
+            "alt",
             "image_url",  
         ]
         # Spécifie les champs qui ne peuvent pas être modifiés via l'API.
