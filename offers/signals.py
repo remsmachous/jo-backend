@@ -12,6 +12,8 @@ import os
 from urllib.parse import urljoin
 from pathlib import Path
 from django.conf import settings
+from django.conf import settings
+from jo_backend.github_dispatch import send_repository_dispatch
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
@@ -128,18 +130,44 @@ def _write_offres_js():
     with open(target, "w", encoding="utf-8") as f:
         f.write(content)
 
+def _trigger_front_sync(why: str, offer_id: int):
+    cfg = getattr(settings, "GITHUB_DISPATCH", {})
+    token = cfg.get("TOKEN")
+    owner = cfg.get("OWNER")
+    repo  = cfg.get("REPO")
+    event = cfg.get("EVENT", "offres_updated")
+
+    if not (token and owner and repo):
+        return
+
+    payload = {
+        "reason": why,
+        "offer_id": offer_id,
+        "backend": "fly:jobackend",
+    }
+    try:
+        send_repository_dispatch(owner, repo, token, event, client_payload=payload)
+    except Exception:
+        import logging
+        logging.exception("Repository dispatch failed")
+
+
 # --- Connexion des signaux ---
 @receiver(post_save, sender=Offer)
-def offer_saved(sender, instance: Offer, created: bool, **kwargs):
+def offer_saved(sender, instance, created, **kwargs):
     try:
         _write_offres_js()
     except Exception as e:
         print("[offers.signals] WARN: génération offres.js échouée:", e)
+    _trigger_front_sync("created" if created else "updated", instance.id)
 
 
 @receiver(post_delete, sender=Offer)
-def offer_deleted(sender, instance: Offer, **kwargs):
+def offer_deleted(sender, instance, **kwargs):
     try:
         _write_offres_js()
     except Exception as e:
         print("[offers.signals] WARN: génération offres.js échouée:", e)
+    _trigger_front_sync("deleted", instance.id)
+
+

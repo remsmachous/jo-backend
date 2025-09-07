@@ -52,10 +52,19 @@ def _hosts_from_urls(urls: list[str]) -> list[str]:
 SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key-change-me")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
 
-# ALLOWED_HOSTS
+# --- ALLOWED_HOSTS ---
 cors_origins = [o.strip() for o in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if o.strip()]
 derived_hosts = _hosts_from_urls(cors_origins)
 ALLOWED_HOSTS = ["jobackend.fly.dev", ".fly.dev", "localhost", "127.0.0.1"]
+
+#--- GitHub Dispatch --- 
+GITHUB_DISPATCH = {
+    "TOKEN": os.getenv("GH_DISPATCH_TOKEN", ""),
+    "OWNER": os.getenv("FRONT_REPO_OWNER", ""),
+    "REPO": os.getenv("FRONT_REPO_NAME", ""),
+    "EVENT": os.getenv("DISPATCH_EVENT", "offres_updated"),
+}
+
 
 # --- Apps ---
 INSTALLED_APPS = [
