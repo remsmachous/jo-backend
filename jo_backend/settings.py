@@ -57,7 +57,7 @@ cors_origins = [o.strip() for o in os.getenv("CORS_ALLOWED_ORIGINS", "").split("
 derived_hosts = _hosts_from_urls(cors_origins)
 ALLOWED_HOSTS = ["jobackend.fly.dev", ".fly.dev", "localhost", "127.0.0.1"]
 
-#--- GitHub Dispatch --- 
+#--- Repository Dispatch --- 
 GITHUB_DISPATCH = {
     "TOKEN": os.getenv("GH_DISPATCH_TOKEN", ""),
     "OWNER": os.getenv("FRONT_REPO_OWNER", ""),
@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
 
     # Tiers
     "rest_framework",

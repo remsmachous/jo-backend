@@ -4,7 +4,7 @@ Description : Définit toutes les routes (endpoints) de l'API liées au processu
               de commande, de la création de la réservation au paiement et à la
               consultation des billets.
 """
-
+app_name = "orders"
 from django.urls import path
 from .views import (
     ReservationCreateAPIView,
