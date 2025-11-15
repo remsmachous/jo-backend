@@ -52,10 +52,19 @@ def _hosts_from_urls(urls: list[str]) -> list[str]:
 SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key-change-me")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
 
-# ALLOWED_HOSTS
+# --- ALLOWED_HOSTS ---
 cors_origins = [o.strip() for o in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if o.strip()]
 derived_hosts = _hosts_from_urls(cors_origins)
 ALLOWED_HOSTS = ["jobackend.fly.dev", ".fly.dev", "localhost", "127.0.0.1"]
+
+#--- Repository Dispatch --- 
+GITHUB_DISPATCH = {
+    "TOKEN": os.getenv("GH_DISPATCH_TOKEN", ""),
+    "OWNER": os.getenv("FRONT_REPO_OWNER", ""),
+    "REPO": os.getenv("FRONT_REPO_NAME", ""),
+    "EVENT": os.getenv("DISPATCH_EVENT", "offres_updated"),
+}
+
 
 # --- Apps ---
 INSTALLED_APPS = [
@@ -66,6 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
 
     # Tiers
     "rest_framework",
@@ -165,13 +175,24 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- CORS ---
-_default_cors = "http://localhost:5173,http://127.0.0.1:5173"
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8080",
-    "http://localhost:8080",
-]
+
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    "http://127.0.0.1:8080,http://localhost:8080"
+)
+
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "https://jobackend.fly.dev")
+
+CSRF_TRUSTED_ORIGINS = env_list(
+    "CSRF_TRUSTED_ORIGINS",
+    "https://jobackend.fly.dev"
+)
+
+derived_hosts = _hosts_from_urls(CORS_ALLOWED_ORIGINS)
+
+ALLOWED_HOSTS = list(set(
+    ["jobackend.fly.dev", ".fly.dev", "localhost", "127.0.0.1"] + derived_hosts
+))
 
 # --- DRF ---
 REST_FRAMEWORK = {

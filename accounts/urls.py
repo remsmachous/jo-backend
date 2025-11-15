@@ -3,7 +3,7 @@ Fichier : urls.py
 Description : Définit les routes de l'API pour l'authentification
               et la gestion des utilisateurs.
 """
-
+app_name = "accounts"
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import RegisterView, MeView
