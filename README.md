@@ -30,3 +30,15 @@ Pour lancer l'ensemble des tests avec mesure de couverture :
 
 ```bash
 python -m pytest --ds=jo_backend.settings_test --cov --cov-report=term-missing
+
+## Organisation Git
+
+Ce projet suit les bonnes pratiques Git :
+
+- `main` contient le code stable, testé.
+- le développement se fait dans des branches `feature/*` (ex : `feature/tests` pour l'intégration des tests automatisés).
+- chaque évolution fait l'objet de commits fréquents et explicites (convention "Conventional Commits").
+
+Exemples de branches utilisées dans ce projet :
+
+- `feature/tests` : ajout et intégration des tests automatisés dans le dépôt backend.
