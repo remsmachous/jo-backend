@@ -31,7 +31,7 @@ Pour lancer l'ensemble des tests avec mesure de couverture :
 ```bash
 python -m pytest --ds=jo_backend.settings_test --cov --cov-report=term-missing
 
-## 🧩 Organisation Git
+## Organisation Git
 
 Ce projet suit les bonnes pratiques Git :
 
