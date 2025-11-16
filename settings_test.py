@@ -7,13 +7,8 @@ Description : Fichier de configuration spécifique aux tests
 from .jo_backend.settings import *  
 
 # Configuration de la base de données pour les tests.
-# Utilise une base de données SQLite en mémoire pour des tests rapides et isolés.
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-    }
-}
+DATABASES["default"]["NAME"] = os.getenv("DB_NAME_TEST", "jo_db_test")
+
 
 # Backend d'email pour les tests.
 # Utilise 'locmem.EmailBackend' pour intercepter les emails en mémoire

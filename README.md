@@ -18,6 +18,7 @@ pip install -r requirements.txt
 
 # Copie des variables
 cp .env.example .env
+```
 
 ## Tests automatisés
 
@@ -30,6 +31,7 @@ Pour lancer l'ensemble des tests avec mesure de couverture :
 
 ```bash
 python -m pytest --ds=jo_backend.settings_test --cov --cov-report=term-missing
+```
 
 ## Organisation Git
 
